@@ -16,10 +16,7 @@ class _HomepageButton extends State<HomepageButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,  // use the context from the build method
-          MaterialPageRoute(builder: (context) => NewPlayer()),
-        );
+        changeRoute();
       },
       child: Container(
         height: 90,
@@ -48,5 +45,14 @@ class _HomepageButton extends State<HomepageButton> {
         ),
       ),
     );
+  }
+
+  void changeRoute() {
+    if (widget.buttonLabel == 'NOUVEAU JOUEUR')
+      Navigator.pushNamed(context, '/new-player');
+    else if (widget.buttonLabel == 'NOUVELLE PARTIE')
+      Navigator.pushNamed(context, '/new-game');
+    else if (widget.buttonLabel == 'CLASSEMENT')
+      Navigator.pushNamed(context, '/ranking');
   }
 }

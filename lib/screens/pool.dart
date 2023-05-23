@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/homepage_button.dart';
 import '../widgets/homepage_ranking.dart';
 
-class Pool extends StatelessWidget {
+class Pool extends StatefulWidget {
   const Pool({super.key});
 
-  // This widget is the root of your application.
+  @override
+  _Pool createState() => _Pool();
+}
+
+class _Pool extends State<Pool> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,19 +19,28 @@ class Pool extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              HomepageRanking(),
-              const Flexible(
-                  child: HomepageButton(buttonLabel: 'NOUVELLE PARTIE')),
-              const Flexible(
+              Expanded(
+                  flex: 4,
+                  child: HomepageRanking()
+              ),
+              const Expanded(
+                flex: 1,
+                  child: HomepageButton(buttonLabel: 'NOUVELLE PARTIE'),
+                ),
+              const Expanded(
+                flex: 1,
                   child: HomepageButton(buttonLabel: 'NOUVEAU JOUEUR')),
-              const Flexible(
+              const Expanded(
+                flex: 1,
                   child: HomepageButton(buttonLabel: 'CLASSEMENT')),
             ],
           ),
         ),
       );
   }
-  void onItemTapped(int index) {
+
+  void changeRoute(String s) {
 
   }
+
 }

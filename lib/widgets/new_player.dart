@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../services/player_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/player_provider.dart';
 
 class NewPlayer extends StatefulWidget {
   NewPlayer() : super();
@@ -10,7 +10,6 @@ class NewPlayer extends StatefulWidget {
 }
 
 class _NewPlayer extends State<NewPlayer> {
-  final playerService = PlayerService();
   var playerNameController = TextEditingController();
 
   @override
@@ -22,8 +21,7 @@ class _NewPlayer extends State<NewPlayer> {
           child: Container(
             height: 280,
             width: double.infinity,
-            margin:
-                const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               color: const Color.fromRGBO(38, 35, 46, 100),
@@ -99,7 +97,7 @@ class _NewPlayer extends State<NewPlayer> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    playerService.addPlayer(playerNameController.text);
+                    Provider.of<PlayerProvider>(context, listen: false).addPlayer(playerNameController.text);
                     Navigator.pop(context);
                   },
                   child: Container(

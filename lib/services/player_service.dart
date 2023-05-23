@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../models/player.dart';
 
-class PlayerService {
+class PlayerService with ChangeNotifier {
   List<Player> playerList = [];
 
   void addPlayer(String newPlayerName) {

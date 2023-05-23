@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ranking_app/providers/player_provider.dart';
 import 'package:ranking_app/screens/pool.dart';
 import 'package:ranking_app/widgets/homepage_button.dart';
 import 'package:ranking_app/widgets/homepage_ranking.dart';
 import 'package:ranking_app/widgets/navbar.dart';
+import 'package:ranking_app/screens/new_game.dart';
+import 'package:ranking_app/widgets/new_player.dart';
+import 'package:ranking_app/widgets/ranking.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => PlayerProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,14 +25,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const int startingSelectedIndex = 0;
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: const Color.fromRGBO(69, 64, 82, 60),
-        body: const Pool(),
-        bottomNavigationBar: Navbar(
-          selectedIndex: startingSelectedIndex,
-          onItemTapped: onItemTapped,
-        ),
+    return ChangeNotifierProvider(
+      create: (_) => PlayerProvider(),
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Scaffold(
+            backgroundColor: Color.fromRGBO(69, 64, 82, 60),
+            body: Pool(),
+            // bottomNavigationBar: Navbar(
+            //   selectedIndex: startingSelectedIndex,
+            //   onItemTapped: onItemTapped,
+            // ),
+          ),
+          '/new-player': (context) => NewPlayer(),
+          '/new-game' : (context) => NewGame(),
+          '/ranking' : (context) => Ranking(),
+        },
       ),
     );
   }
