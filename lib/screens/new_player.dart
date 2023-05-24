@@ -15,7 +15,6 @@ class _NewPlayer extends State<NewPlayer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(69, 64, 82, 60),
       body: SafeArea(
         child: Center(
           child: Container(

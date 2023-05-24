@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'new_player.dart';
+import '../screens/new_player.dart';
 
 class HomepageButton extends StatefulWidget {
   final String buttonLabel;
-  const HomepageButton({Key? key, required this.buttonLabel}) : super(key: key);
+  const   HomepageButton({Key? key, required this.buttonLabel}) : super(key: key);
 
   @override
   _HomepageButton createState() => _HomepageButton();

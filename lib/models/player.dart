@@ -2,8 +2,9 @@ class Player {
   final String name;
   int victories;
   int defeats;
+  int ranking;
 
-  Player(this.name, this.victories, this.defeats);
+  Player(this.name, this.victories, this.defeats, this.ranking);
 
   double getScore() {
     double score = victories / (victories + defeats);
