@@ -18,21 +18,26 @@ class PlayerProvider with ChangeNotifier {
   }
 
   void updateRanking() {
-    // Sort the player list based on the victory-to-defeat ratio (descending order)
-    _playerList.sort((a, b) => _calculateRatio(b).compareTo(_calculateRatio(a)));
+    _playerList.sort((a, b) {
+      if (a.victories == 0 && a.defeats == 0) {
+        return 1;
+      } else if (b.victories == 0 && b.defeats == 0) {
+        return -1;
+      } else {
+        return _calculateRatio(b).compareTo(_calculateRatio(a));
+      }
+    }
+    );
 
-    // Update the rankings based on the sorted order
     for (int i = 0; i < _playerList.length; i++) {
       _playerList[i].ranking = i + 1;
     }
 
-    // Notify listeners
     notifyListeners();
   }
 
   double _calculateRatio(Player player) {
     if (player.defeats == 0) {
-      // Avoid division by zero
       return double.infinity;
     }
     return player.victories / player.defeats;

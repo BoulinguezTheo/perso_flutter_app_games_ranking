@@ -22,22 +22,9 @@ class PoolService with ChangeNotifier {
     teamOne = [];
     teamTwo = [];
   }
-
-  String? winnerTeam;
-  String? loserTeam;
-
   void setWinnerAndLoser(BuildContext context, String? winner, String? loser) {
-    winnerTeam = winner;
-    loserTeam = loser;
-    // Get the PlayerProvider
     var playerProvider = Provider.of<PlayerProvider>(context, listen: false);
-    // Update the stats of the winning and losing teams
-    // if (winner != null) {
-    //   playerProvider.incrementWins(winner);
-    // }
-    // if (loser != null) {
-    //   playerProvider.incrementLosses(loser);
-    // }
+
     if (winner == 'Team 1') {
       playerProvider.incrementsVictories(teamOne);
       playerProvider.incrementsDefeats(teamTwo);
