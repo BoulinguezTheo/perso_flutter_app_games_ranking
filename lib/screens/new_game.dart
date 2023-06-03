@@ -65,8 +65,7 @@ class _NewGame extends State<NewGame> {
                             color: Colors.black.withOpacity(0.1),
                             spreadRadius: 2,
                             blurRadius: 3,
-                            offset:
-                            const Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -74,7 +73,10 @@ class _NewGame extends State<NewGame> {
                         //TODO : VOIR MAQUETTE
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const TeamLabel(teamLabel: 'Team 1'),
+                          const TeamLabel(
+                            teamLabel: 'Team 1',
+                            backgroundColor: Color.fromRGBO(69, 64, 82, 100),
+                          ),
                           GestureDetector(
                             onTap: () => _showPicker(context, 'Team 1'),
                             child: const AddPlayerButton(),
@@ -87,7 +89,10 @@ class _NewGame extends State<NewGame> {
                               color: Colors.white,
                             ),
                           ),
-                          const TeamLabel(teamLabel: 'Team 2'),
+                          const TeamLabel(
+                            teamLabel: 'Team 2',
+                            backgroundColor: Color.fromRGBO(69, 64, 82, 100),
+                          ),
                           GestureDetector(
                             onTap: () => _showPicker(context, 'Team 2'),
                             child: const AddPlayerButton(),
@@ -111,14 +116,14 @@ class _NewGame extends State<NewGame> {
                             color: Colors.black.withOpacity(0.1),
                             spreadRadius: 2,
                             blurRadius: 3,
-                            offset:
-                            const Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          if (poolService.teamOne.isNotEmpty && poolService.teamTwo.isNotEmpty) {
+                          if (poolService.teamOne.isNotEmpty &&
+                              poolService.teamTwo.isNotEmpty) {
                             Navigator.pushNamed(context, '/pool-game');
                           }
                         },
@@ -161,7 +166,7 @@ class _NewGame extends State<NewGame> {
             },
             children: List<Widget>.generate(
               playerProvider.playerList.length,
-                  (int index) {
+              (int index) {
                 return Text(
                   playerProvider.playerList[index].name,
                   style: const TextStyle(
