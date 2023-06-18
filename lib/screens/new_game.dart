@@ -16,9 +16,11 @@ class NewGame extends StatefulWidget {
 }
 
 class _NewGame extends State<NewGame> {
+
   @override
   Widget build(BuildContext context) {
     var playerProvider = Provider.of<PlayerProvider>(context, listen: false);
+    resetSelectedPlayers();
 
     return Scaffold(
       body: SafeArea(
@@ -145,6 +147,11 @@ class _NewGame extends State<NewGame> {
         ),
       ),
     );
+  }
+
+  void resetSelectedPlayers() {
+    var poolService = Provider.of<PoolService>(context, listen: false);
+    poolService.resetTeams();
   }
 
   void _showPicker(BuildContext context, String team) {
