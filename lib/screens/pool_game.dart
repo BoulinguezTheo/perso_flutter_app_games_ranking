@@ -106,11 +106,11 @@ class _PoolGame extends State<PoolGame> {
                     flex: 1,
                     child: Container(
                       margin: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, bottom: 20.0),
-                      padding: const EdgeInsets.all(20.0),
+                          left: 20.0, right: 20.0, bottom: 20.0
+                      ),
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(38, 35, 46, 100),
                         borderRadius: BorderRadius.circular(15),
+                        color: const Color.fromRGBO(38, 35, 46, 100),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.1),
@@ -122,13 +122,13 @@ class _PoolGame extends State<PoolGame> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          poolService.setWinnerAndLoser(context, teamWinner, teamLooser);
-                          poolService.resetTeams();
-                          Navigator.pushNamed(context, '/');
+                            poolService.setWinnerAndLoser(context, teamWinner, teamLooser);
+                            poolService.resetTeams();
+                            Navigator.pushNamed(context, '/');
                         },
                         child: const Center(
                           child: Text(
-                            'TERMINER',
+                            'TERMINER LA PARTIE',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

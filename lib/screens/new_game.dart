@@ -138,7 +138,6 @@ class _NewGame extends State<NewGame> {
                         ),
                       ),
                   ),
-                  
                 ],
               );
             },
