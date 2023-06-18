@@ -103,42 +103,42 @@ class _NewGame extends State<NewGame> {
                     ),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, bottom: 20.0),
-                      padding: const EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(38, 35, 46, 100),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (poolService.teamOne.isNotEmpty &&
-                              poolService.teamTwo.isNotEmpty) {
-                            Navigator.pushNamed(context, '/pool-game');
-                          }
-                        },
-                        child: const Center(
-                          child: Text(
-                            'JOUER',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                          left: 20.0, right: 20.0, bottom: 20.0
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: const Color.fromRGBO(38, 35, 46, 100),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              spreadRadius: 2,
+                              blurRadius: 3,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (poolService.teamOne.isNotEmpty &&
+                                poolService.teamTwo.isNotEmpty) {
+                              Navigator.pushNamed(context, '/pool-game');
+                            }
+                          },
+                          child: const Center(
+                            child: Text(
+                              'JOUER',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                   ),
+                  
                 ],
               );
             },
