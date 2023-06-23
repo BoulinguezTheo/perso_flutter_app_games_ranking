@@ -20,8 +20,10 @@ class PoolGameImpl extends State<PoolGame> {
   final String teamOne = 'Team 1';
   final String teamTwo = 'Team 2';
   final String endGame = 'TERMINER LA PARTIE';
-  Color _teamOneBackgroundColor = Colors.transparent;
-  Color _teamTwoBackgroundColor = Colors.transparent;
+  final Color _defaultTeamLabelBackgroundColor =
+      const Color.fromRGBO(69, 64, 82, 1.0);
+  Color _teamOneBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
+  Color _teamTwoBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   String? teamWinner;
   String? teamLooser;
 
@@ -153,8 +155,8 @@ class PoolGameImpl extends State<PoolGame> {
   void _resetTeamsAttributs() {
     teamWinner = null;
     teamLooser = null;
-    _teamOneBackgroundColor = Colors.transparent;
-    _teamTwoBackgroundColor = Colors.transparent;
+    _teamOneBackgroundColor = _defaultTeamLabelBackgroundColor;
+    _teamTwoBackgroundColor = _defaultTeamLabelBackgroundColor;
   }
 
   Widget displayPlayerInTeam(String team, PoolService poolService) {
@@ -162,14 +164,20 @@ class PoolGameImpl extends State<PoolGame> {
       return Column(
         children: [
           for (var player in poolService.teamOne)
-            TeamLabel(teamLabel: player.name)
+            TeamLabel(
+              teamLabel: player.name,
+              backgroundColor: _defaultTeamLabelBackgroundColor,
+            )
         ],
       );
     } else if (team == teamTwo && poolService.teamTwo.isNotEmpty) {
       return Column(
         children: [
           for (var player in poolService.teamTwo)
-            TeamLabel(teamLabel: player.name)
+            TeamLabel(
+              teamLabel: player.name,
+              backgroundColor: _defaultTeamLabelBackgroundColor,
+            )
         ],
       );
     } else {
