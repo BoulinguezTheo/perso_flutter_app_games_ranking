@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ranking_app/providers/player_provider.dart';
+import 'package:ranking_app/screens/login_page.dart';
 import 'package:ranking_app/screens/pool.dart';
 import 'package:ranking_app/screens/pool_game.dart';
 import 'package:ranking_app/services/pool_service.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Scaffold(
-          body: Pool(),
+          body: LoginPage(),
         ),
         '/new-player': (context) => Scaffold(
           body: NewPlayer(),
