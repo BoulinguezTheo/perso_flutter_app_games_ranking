@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ranking_app/services/pool_service.dart';
+import 'package:ranking_app/widgets/end_game_button.dart';
 import 'package:ranking_app/widgets/page_title_widget.dart';
 import 'package:ranking_app/widgets/team_label.dart';
 import 'package:scaled_size/scaled_size.dart';
-
-import '../widgets/homepage_button.dart';
 
 class PoolGame extends StatefulWidget {
   const PoolGame({Key? key}) : super(key: key);
@@ -37,17 +36,14 @@ class PoolGameImpl extends State<PoolGame> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.loose,
-                  child: PageTitleWidget(title: pageTitle),
-                ),
                 SizedBox(
                   height: 3.vh,
                 ),
-                Flexible(
-                  flex: 3,
-                  fit: FlexFit.loose,
+                PageTitleWidget(title: pageTitle),
+                SizedBox(
+                  height: 3.vh,
+                ),
+                IntrinsicHeight(
                   child: Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -66,6 +62,7 @@ class PoolGameImpl extends State<PoolGame> {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
@@ -79,9 +76,12 @@ class PoolGameImpl extends State<PoolGame> {
                           ),
                         ),
                         const Spacer(),
+                        SizedBox(
+                          height: 2.vh,
+                        ),
                         displayPlayerInTeam(teamOne, poolService),
                         SizedBox(
-                          height: 3.vh,
+                          height: 2.vh,
                         ),
                         PageTitleWidget(
                           title: teamSeparator,
@@ -90,6 +90,9 @@ class PoolGameImpl extends State<PoolGame> {
                           height: 3.vh,
                         ),
                         displayPlayerInTeam(teamTwo, poolService),
+                        SizedBox(
+                          height: 2.vh,
+                        ),
                         const Spacer(),
                         GestureDetector(
                           onTap: () {
@@ -107,17 +110,19 @@ class PoolGameImpl extends State<PoolGame> {
                   ),
                 ),
                 SizedBox(
-                  height: 3.vh,
+                  height: 2.vh,
                 ),
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.loose,
-                  child: GestureDetector(
-                    child: HomepageButton(
-                      buttonLabel: endGame,
-                    ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: EndGameButton(
+                    buttonLabel: endGame,
                   ),
                 ),
+                SizedBox(
+                  height: 2.vh,
+                )
               ],
             );
           },
@@ -162,22 +167,22 @@ class PoolGameImpl extends State<PoolGame> {
   Widget displayPlayerInTeam(String team, PoolService poolService) {
     if (team == teamOne && poolService.teamOne.isNotEmpty) {
       return Column(
-        children: [
+        children: <Widget>[
           for (var player in poolService.teamOne)
             TeamLabel(
               teamLabel: player.name,
               backgroundColor: _defaultTeamLabelBackgroundColor,
-            )
+            ),
         ],
       );
     } else if (team == teamTwo && poolService.teamTwo.isNotEmpty) {
       return Column(
-        children: [
+        children: <Widget>[
           for (var player in poolService.teamTwo)
             TeamLabel(
               teamLabel: player.name,
               backgroundColor: _defaultTeamLabelBackgroundColor,
-            )
+            ),
         ],
       );
     } else {
