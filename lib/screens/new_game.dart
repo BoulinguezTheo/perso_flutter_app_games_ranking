@@ -4,9 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:ranking_app/models/player.dart';
 import 'package:ranking_app/services/pool_service.dart';
 import 'package:ranking_app/widgets/add_player_button.dart';
+import 'package:ranking_app/widgets/end_game_button.dart';
+import 'package:ranking_app/widgets/homepage_button.dart';
 import 'package:ranking_app/widgets/team_label.dart';
+import 'package:scaled_size/scaled_size.dart';
 
 import '../providers/player_provider.dart';
+import '../widgets/page_title_widget.dart';
 
 class NewGame extends StatefulWidget {
   const NewGame({Key? key}) : super(key: key);
@@ -16,6 +20,10 @@ class NewGame extends StatefulWidget {
 }
 
 class _NewGame extends State<NewGame> {
+  final String playString = 'JOUER';
+  final String teamSeparator = "VS";
+  bool _canGameStart = false;
+
   @override
   Widget build(BuildContext context) {
     var playerProvider = Provider.of<PlayerProvider>(context, listen: false);
@@ -29,6 +37,9 @@ class _NewGame extends State<NewGame> {
             builder: (context, poolService, child) {
               return Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 2.vh,
+                  ),
                   Expanded(
                     flex: 1,
                     child: Row(
@@ -52,12 +63,14 @@ class _NewGame extends State<NewGame> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 2.vh,
+                  ),
                   Expanded(
                     flex: 9,
                     child: Container(
                       width: double.infinity,
-                      margin: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, bottom: 20.0),
+                      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(38, 35, 46, 100),
@@ -78,22 +91,21 @@ class _NewGame extends State<NewGame> {
                             teamLabel: 'Team 1',
                             backgroundColor: Color.fromRGBO(69, 64, 82, 100),
                           ),
+                          Spacer(),
                           GestureDetector(
                             onTap: () => _showPicker(
                                 context, 'Team 1', remainingPlayers),
                             child: const AddPlayerButton(),
                           ),
                           displayPlayerInTeam('Team 1', poolService),
-                          const Text(
-                            'VS',
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                            ),
+                          SizedBox(
+                            height: 2.vh,
                           ),
-                          const TeamLabel(
-                            teamLabel: 'Team 2',
-                            backgroundColor: Color.fromRGBO(69, 64, 82, 100),
+                          PageTitleWidget(
+                            title: teamSeparator,
+                          ),
+                          SizedBox(
+                            height: 2.vh,
                           ),
                           GestureDetector(
                             onTap: () => _showPicker(
@@ -101,44 +113,32 @@ class _NewGame extends State<NewGame> {
                             child: const AddPlayerButton(),
                           ),
                           displayPlayerInTeam('Team 2', poolService),
+                          Spacer(),
+                          const TeamLabel(
+                            teamLabel: 'Team 2',
+                            backgroundColor: Color.fromRGBO(69, 64, 82, 100),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 20.0, right: 20.0, bottom: 20.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromRGBO(38, 35, 46, 100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 2,
-                            blurRadius: 3,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (poolService.teamOne.isNotEmpty &&
-                              poolService.teamTwo.isNotEmpty) {
-                            Navigator.pushNamed(context, '/pool-game');
-                          }
-                        },
-                        child: const Center(
-                          child: Text(
-                            'JOUER',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                  SizedBox(
+                    height: 2.vh,
+                  ),
+                  const HomepageButton(buttonLabel: 'EQUIPES ALEATOIRES'),
+                  IgnorePointer(
+                    ignoring: !_canGameStart,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/pool-game');
+                      },
+                      child: DisableButton(
+                          buttonLabel: playString,
+                          isAvailableDisplay: _canGameStart),
                     ),
+                  ),
+                  SizedBox(
+                    height: 2.vh,
                   ),
                 ],
               );
@@ -188,17 +188,24 @@ class _NewGame extends State<NewGame> {
       addPlayerToTeam(selectedPlayer, team, poolService, playerProvider);
     });
   }
-}
 
-void addPlayerToTeam(
-    Player player, String team, PoolService poolService, playerProvider) {
-  if (team == 'Team 1') {
-    poolService.addPlayerToTeamOne(player);
-    playerProvider.remove(player);
+  void addPlayerToTeam(
+      Player player, String team, PoolService poolService, playerProvider) {
+    if (team == 'Team 1') {
+      poolService.addPlayerToTeamOne(player);
+      playerProvider.remove(player);
+    }
+    if (team == 'Team 2') {
+      poolService.addPlayerToTeamTwo(player);
+      playerProvider.remove(player);
+    }
+    _setCanGameStartStatus(poolService);
   }
-  if (team == 'Team 2') {
-    poolService.addPlayerToTeamTwo(player);
-    playerProvider.remove(player);
+
+  void _setCanGameStartStatus(PoolService poolService) {
+    if (poolService.teamOne.isNotEmpty && poolService.teamTwo.isNotEmpty) {
+      _canGameStart = true;
+    }
   }
 }
 

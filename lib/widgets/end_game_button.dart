@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scaled_size/scaled_size.dart';
 
-class EndGameButton extends StatelessWidget {
+class DisableButton extends StatelessWidget {
   final String buttonLabel;
-
   bool isAvailableDisplay;
 
-  EndGameButton(
+  DisableButton(
       {super.key, required this.buttonLabel, required this.isAvailableDisplay});
 
   @override

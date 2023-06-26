@@ -21,7 +21,7 @@ class PoolGameImpl extends State<PoolGame> {
   final String teamTwo = 'Team 2';
   final String endGame = 'TERMINER LA PARTIE';
   final Color _defaultTeamLabelBackgroundColor =
-  const Color.fromRGBO(69, 64, 82, 1.0);
+      const Color.fromRGBO(69, 64, 82, 1.0);
   Color _teamOneBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   Color _teamTwoBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   String? teamWinner;
@@ -123,7 +123,7 @@ class PoolGameImpl extends State<PoolGame> {
                       poolService.resetTeams();
                       Navigator.pushNamed(context, '/');
                     },
-                    child: EndGameButton(
+                    child: DisableButton(
                         buttonLabel: endGame,
                         isAvailableDisplay: _endGameButtonStatus),
                   ),
@@ -136,7 +136,6 @@ class PoolGameImpl extends State<PoolGame> {
             );
           },
         ),
-
       ),
     );
   }
