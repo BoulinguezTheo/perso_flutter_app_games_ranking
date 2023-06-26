@@ -5,11 +5,9 @@ class TeamLabel extends StatelessWidget {
   final String teamLabel;
   final Color backgroundColor;
 
-  const TeamLabel({
-    Key? key,
-    required this.teamLabel,
-    required this.backgroundColor,
-  }) : super(key: key);
+  const TeamLabel(
+      {Key? key, required this.teamLabel, required this.backgroundColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
