@@ -155,7 +155,7 @@ class _NewGame extends State<NewGame> {
   }
 
   void _showPicker(BuildContext context, String team, playerProvider) {
-    Player? selectedPlayer;
+    Player selectedPlayer = playerProvider[0];
     double screenHeight = MediaQuery.of(context).size.height;
 
     showCupertinoModalPopup(
@@ -184,49 +184,46 @@ class _NewGame extends State<NewGame> {
         );
       },
     ).then((_) {
-      if (selectedPlayer != null) {
-        var poolService = Provider.of<PoolService>(context, listen: false);
-        addPlayerToTeam(selectedPlayer!, team, poolService, playerProvider);
-        selectedPlayer = null;
-      }
+      var poolService = Provider.of<PoolService>(context, listen: false);
+      addPlayerToTeam(selectedPlayer, team, poolService, playerProvider);
     });
   }
+}
 
-  void addPlayerToTeam(
-      Player player, String team, PoolService poolService, playerProvider) {
-    if (team == 'Team 1') {
-      poolService.addPlayerToTeamOne(player);
-      playerProvider.remove(player);
-    }
-    if (team == 'Team 2') {
-      poolService.addPlayerToTeamTwo(player);
-      playerProvider.remove(player);
-    }
+void addPlayerToTeam(
+    Player player, String team, PoolService poolService, playerProvider) {
+  if (team == 'Team 1') {
+    poolService.addPlayerToTeamOne(player);
+    playerProvider.remove(player);
   }
+  if (team == 'Team 2') {
+    poolService.addPlayerToTeamTwo(player);
+    playerProvider.remove(player);
+  }
+}
 
-  Widget displayPlayerInTeam(String team, PoolService poolService) {
-    if (team == 'Team 1' && poolService.teamOne.isNotEmpty) {
-      return Column(
-        children: [
-          for (var player in poolService.teamOne)
-            TeamLabel(
-              teamLabel: player.name,
-              backgroundColor: const Color.fromRGBO(69, 64, 82, 1.0),
-            )
-        ],
-      );
-    } else if (team == 'Team 2' && poolService.teamTwo.isNotEmpty) {
-      return Column(
-        children: [
-          for (var player in poolService.teamTwo)
-            TeamLabel(
-              teamLabel: player.name,
-              backgroundColor: const Color.fromRGBO(69, 64, 82, 1.0),
-            )
-        ],
-      );
-    } else {
-      return Container();
-    }
+Widget displayPlayerInTeam(String team, PoolService poolService) {
+  if (team == 'Team 1' && poolService.teamOne.isNotEmpty) {
+    return Column(
+      children: [
+        for (var player in poolService.teamOne)
+          TeamLabel(
+            teamLabel: player.name,
+            backgroundColor: const Color.fromRGBO(69, 64, 82, 1.0),
+          )
+      ],
+    );
+  } else if (team == 'Team 2' && poolService.teamTwo.isNotEmpty) {
+    return Column(
+      children: [
+        for (var player in poolService.teamTwo)
+          TeamLabel(
+            teamLabel: player.name,
+            backgroundColor: const Color.fromRGBO(69, 64, 82, 1.0),
+          )
+      ],
+    );
+  } else {
+    return Container();
   }
 }
