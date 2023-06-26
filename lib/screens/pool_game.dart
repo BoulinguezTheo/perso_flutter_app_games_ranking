@@ -25,6 +25,7 @@ class PoolGameImpl extends State<PoolGame> {
   Color _teamTwoBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   String? teamWinner;
   String? teamLooser;
+  bool endGameButtonStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +113,13 @@ class PoolGameImpl extends State<PoolGame> {
                 SizedBox(
                   height: 2.vh,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                  child: EndGameButton(
-                    buttonLabel: endGame,
+                IgnorePointer(
+                  ignoring: !endGameButtonStatus,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: EndGameButton(buttonLabel: endGame),
                   ),
                 ),
                 SizedBox(
@@ -143,6 +145,7 @@ class PoolGameImpl extends State<PoolGame> {
     } else {
       _resetTeamsAttributs();
     }
+    _setEndGameButtonStatus();
   }
 
   void _setTeamOneAttributs() {
@@ -162,6 +165,10 @@ class PoolGameImpl extends State<PoolGame> {
     teamLooser = null;
     _teamOneBackgroundColor = _defaultTeamLabelBackgroundColor;
     _teamTwoBackgroundColor = _defaultTeamLabelBackgroundColor;
+  }
+
+  void _setEndGameButtonStatus() {
+    endGameButtonStatus = teamLooser != null && teamWinner != null;
   }
 
   Widget displayPlayerInTeam(String team, PoolService poolService) {
