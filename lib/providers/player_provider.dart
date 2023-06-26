@@ -45,6 +45,7 @@ class PlayerProvider with ChangeNotifier {
 
   void incrementsVictories(List<dynamic> playerList) {
     for (var winingPlayer in playerList) {
+      print(winingPlayer.name);
       var player = _playerList.firstWhere(
               (player) => winingPlayer.name == player.name
       );
