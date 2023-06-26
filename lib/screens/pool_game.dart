@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ranking_app/services/pool_service.dart';
 import 'package:ranking_app/widgets/end_game_button.dart';
 import 'package:ranking_app/widgets/page_title_widget.dart';
+import 'package:ranking_app/widgets/select_team_message.dart';
 import 'package:ranking_app/widgets/team_label.dart';
 import 'package:scaled_size/scaled_size.dart';
 
@@ -20,7 +21,7 @@ class PoolGameImpl extends State<PoolGame> {
   final String teamTwo = 'Team 2';
   final String endGame = 'TERMINER LA PARTIE';
   final Color _defaultTeamLabelBackgroundColor =
-      const Color.fromRGBO(69, 64, 82, 1.0);
+  const Color.fromRGBO(69, 64, 82, 1.0);
   Color _teamOneBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   Color _teamTwoBackgroundColor = const Color.fromRGBO(69, 64, 82, 1.0);
   String? teamWinner;
@@ -117,6 +118,9 @@ class PoolGameImpl extends State<PoolGame> {
                   ignoring: !_endGameButtonStatus,
                   child: GestureDetector(
                     onTap: () {
+                      poolService.setWinnerAndLoser(
+                          context, teamWinner, teamLooser);
+                      poolService.resetTeams();
                       Navigator.pushNamed(context, '/');
                     },
                     child: EndGameButton(
@@ -126,11 +130,13 @@ class PoolGameImpl extends State<PoolGame> {
                 ),
                 SizedBox(
                   height: 2.vh,
-                )
+                ),
+                if (!_endGameButtonStatus) const SelectTeamMessage(),
               ],
             );
           },
         ),
+
       ),
     );
   }
